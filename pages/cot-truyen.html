@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cốt Truyện | Sora Nguyễn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --card: rgba(35, 27, 82, 0.72);
+      --line: rgba(255,255,255,0.12);
+      --text: #f9f1ff;
+      --sub: #dbcff8;
+    }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(12,10,34,.58), rgba(12,10,34,.90)),
+        url('../images/1 (7).jpg') center/cover fixed no-repeat;
+      min-height: 100vh;
+    }
+    .wrap { width: min(1180px, calc(100% - 28px)); margin: 0 auto; padding-bottom: 30px; }
+    nav {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+      padding: 16px 22px;
+      background: rgba(22,17,54,.52);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+    }
+    .logo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #ffe3f1;
+      text-decoration: none;
+    }
+    .menu { display: flex; gap: 10px; flex-wrap: wrap; }
+    .menu a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .menu a.active { background: linear-gradient(135deg, rgba(244,138,194,.30), rgba(138,120,255,.24)); }
+    .box {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+    }
+    h1 { font-size: 3rem; color: #ffd9f1; margin-bottom: 12px; }
+    p { color: var(--sub); line-height: 1.8; margin-bottom: 12px; }
+    .chapters {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .chapter {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .chapter img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .chapter div { padding: 16px; }
+    .chapter h3 { color: #ffe7f4; margin-bottom: 8px; }
+    audio { width: 100%; margin-top: 18px; }
+    @media (max-width: 900px) {
+      .menu { display: none; }
+      .chapters { grid-template-columns: 1fr; }
+    }
+    .petals {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.petal {
+  position: absolute;
+  top: -15vh;
+  width: 22px;
+  height: 14px;
+  background: linear-gradient(135deg, rgba(255,236,246,0.98), rgba(255,166,208,0.92));
+  border-radius: 16px 2px 16px 2px;
+  box-shadow: 0 0 12px rgba(255, 193, 220, 0.32);
+  opacity: 0.88;
+  animation: sakuraFall linear infinite;
+}
+
+.petal::after {
+  content: '';
+  position: absolute;
+  inset: 2px 3px 3px 3px;
+  background: rgba(255,255,255,0.18);
+  border-radius: inherit;
+}
+
+@keyframes sakuraFall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  25% {
+    transform: translate3d(55px, 24vh, 0) rotate(95deg) scale(1);
+  }
+  50% {
+    transform: translate3d(-65px, 52vh, 0) rotate(180deg) scale(1.05);
+  }
+  75% {
+    transform: translate3d(80px, 78vh, 0) rotate(260deg) scale(0.96);
+  }
+  100% {
+    transform: translate3d(-90px, 115vh, 0) rotate(360deg) scale(0.92);
+    opacity: 0.14;
+  }
+}
+  </style>
+  <link rel="stylesheet" href="../player.css">
+</head>
+<body>
+  <div class="petals" id="petals"></div>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../index.html">Sora Nguyễn</a>
+      <div class="menu">
+        <a href="../index.html">Trang Chủ</a>
+        <a href="nhan-vat.html">Nhân Vật</a>
+        <a href="thu-vien.html">Thư Viện</a>
+        <a class="active" href="cot-truyen.html">Cốt Truyện</a>
+        <a href="am-nhac.html">Âm Nhạc</a>
+        <a href="lien-he.html">Liên Hệ</a>
+      </div>
+    </nav>
+
+    <div class="box">
+      <h1>Cốt Truyện</h1>
+      <p>Thế giới này bắt đầu từ một thành phố ngủ yên dưới ánh trăng và những cánh hoa đào không bao giờ rơi hết. Mỗi nhân vật giữ một phần ký ức, và khi các ký ức chạm nhau, sự thật cũng dần hiện ra.</p>
+
+      <div class="chapters">
+        <div class="chapter">
+          <img src="../images/1 (1).jpg" alt="">
+          <div>
+            <h3>Chương 1 • Moon Blossom</h3>
+            <p>Moon Blossom là người đầu tiên nghe thấy tiếng gọi từ thành phố cổ. Từ đó cô bắt đầu hành trình tìm lại ký ức bị phong ấn và gặp những người cũng mang những mảnh chuyện chưa trọn.</p>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <img src="../images/1 (23).jpg" alt="">
+          <div>
+            <h3>Chương 2 • Purple Blade</h3>
+            <p>Purple Blade xuất hiện như một người ngăn cản, nhưng thật ra đang bảo vệ cánh cổng giữa thế giới thật và vùng ký ức. Cô là tuyến hành động lớn nhất trong truyện.</p>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <img src="../images/1 (2).jpg" alt="">
+          <div>
+            <h3>Chương 3 • Winter Spirit</h3>
+            <p>Winter Spirit sống ở rìa thế giới ký ức, nơi tuyết không tan. Cô là nhân vật chữa lành, giúp cả nhóm không bị lạc trong cảm xúc quá mạnh.</p>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <img src="../images/1 (21).jpg" alt="">
+          <div>
+            <h3>Chương 4 • Dream Sleep</h3>
+            <p>Dream Sleep chỉ xuất hiện trong giấc mơ. Cô để lại những lời nhắn mơ hồ nhưng luôn dẫn nhóm chính tiến gần hơn tới sự thật cuối cùng.</p>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <img src="../images/1 (32).jpg" alt="">
+          <div>
+            <h3>Chương 5 • Sunset Journey</h3>
+            <p>Đây là phân đoạn rời bỏ vùng an toàn. Nhân vật phải chấp nhận buông một điều quý giá để tiếp tục bước tới thế giới xa lạ phía trước.</p>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <img src="../images/1 (35).jpg" alt="">
+          <div>
+            <h3>Chương 6 • Black Echo</h3>
+            <p>Black Echo đẩy câu chuyện vào vùng căng thẳng nhất. Đây là thời điểm các bí mật lớn bị khơi lên và mối quan hệ giữa các nhân vật bắt đầu rạn nứt.</p>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+  <script>
+  function createPetals() {
+    const container = document.getElementById('petals');
+    if (!container) return;
+
+    for (let i = 0; i < 56; i++) {
+      const petal = document.createElement('span');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (14 + Math.random() * 12) + 's';
+      petal.style.animationDelay = (Math.random() * 12) + 's';
+      petal.style.opacity = 0.45 + Math.random() * 0.45;
+      petal.style.width = (14 + Math.random() * 14) + 'px';
+      petal.style.height = (9 + Math.random() * 8) + 'px';
+      petal.style.filter = `blur(${Math.random() * 0.8}px)`;
+      container.appendChild(petal);
+    }
+  }
+
+  createPetals();
+</script>
+
+  <div class="sora-player" id="soraPlayer">
+    <div class="sora-player-main">
+      <div class="sora-track">
+        <img class="sora-cover" id="soraCover" src="../images/1 (16).jpg" alt="cover">
+        <div><div class="sora-title" id="soraTitle">Bất Công</div><div class="sora-artist" id="soraArtist">Sora Nguyễn</div></div>
+      </div>
+      <div class="sora-mid">
+        <div class="sora-controls">
+          <button class="sora-btn" id="soraPrev" type="button">⏮</button>
+          <button class="sora-btn" id="soraPlayPause" type="button">▶</button>
+          <button class="sora-btn" id="soraNext" type="button">⏭</button>
+        </div>
+        <div class="sora-progress-line"><span id="soraCurrent">00:00</span><input id="soraProgress" type="range" min="0" max="100" value="0"><span id="soraDuration">00:00</span></div>
+        <div class="sora-status" id="soraStatus">Bấm ▶ để phát nhạc</div>
+      </div>
+      <div class="sora-side">
+        <div class="sora-volume">🔊 <input id="soraVolume" type="range" min="0" max="1" step="0.01" value="0.8"> ♡</div>
+        <div class="sora-tools">
+          <button class="sora-small-btn" id="soraShuffle" type="button">🔀</button>
+          <button class="sora-small-btn" id="soraRepeat" type="button">🔁</button>
+          <button class="sora-small-btn" id="soraToggleList" type="button">Danh sách</button>
+          <button class="sora-small-btn" id="soraCheck" type="button">Kiểm tra</button>
+        </div>
+      </div>
+    </div>
+    <div class="sora-list-panel"><div class="sora-list-title"><span>🎵 Danh sách phát</span><span id="soraListHint">Click bài để phát</span></div><div class="sora-list" id="soraList"></div></div>
+    <audio id="soraAudio" preload="auto"></audio>
+  </div>
+  <script src="../player.js"></script>
+</body>
+</html>

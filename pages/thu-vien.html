@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thư Viện | Sora Nguyễn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --card: rgba(35, 27, 82, 0.72);
+      --line: rgba(255,255,255,0.12);
+      --text: #f9f1ff;
+      --sub: #dbcff8;
+    }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(12,10,34,.58), rgba(12,10,34,.90)),
+        url('../images/1 (22).jpg') center/cover fixed no-repeat;
+      min-height: 100vh;
+    }
+    .wrap { width: min(1260px, calc(100% - 28px)); margin: 0 auto; padding-bottom: 30px; }
+    nav {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+      padding: 16px 22px;
+      background: rgba(22,17,54,.52);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+    }
+    .logo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #ffe3f1;
+      text-decoration: none;
+    }
+    .menu { display: flex; gap: 10px; flex-wrap: wrap; }
+    .menu a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .menu a.active { background: linear-gradient(135deg, rgba(244,138,194,.30), rgba(138,120,255,.24)); }
+    .box {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+    }
+    h1 { font-size: 3rem; color: #ffd9f1; margin-bottom: 12px; }
+    p { color: var(--sub); line-height: 1.8; }
+    .grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .item {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+    .item:hover, .item.active {
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 2px rgba(244,138,194,.4);
+    }
+    .item img {
+      width: 100%;
+      height: 185px;
+      object-fit: cover;
+      display: block;
+    }
+    .item div { padding: 14px; }
+    .item h3 { margin-bottom: 8px; color: #ffe7f4; font-size: 1.05rem; }
+    .item p { font-size: .92rem; line-height: 1.6; }
+    .preview {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 16px;
+    }
+    .panel {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .panel img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+    }
+    .panel .content { padding: 18px; }
+    .panel h2 { color: #ffe7f4; margin-bottom: 10px; }
+    audio { width: 100%; margin-top: 16px; }
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+      .preview { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 780px) {
+      .menu { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .petals {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.petal {
+  position: absolute;
+  top: -15vh;
+  width: 22px;
+  height: 14px;
+  background: linear-gradient(135deg, rgba(255,236,246,0.98), rgba(255,166,208,0.92));
+  border-radius: 16px 2px 16px 2px;
+  box-shadow: 0 0 12px rgba(255, 193, 220, 0.32);
+  opacity: 0.88;
+  animation: sakuraFall linear infinite;
+}
+
+.petal::after {
+  content: '';
+  position: absolute;
+  inset: 2px 3px 3px 3px;
+  background: rgba(255,255,255,0.18);
+  border-radius: inherit;
+}
+
+@keyframes sakuraFall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  25% {
+    transform: translate3d(55px, 24vh, 0) rotate(95deg) scale(1);
+  }
+  50% {
+    transform: translate3d(-65px, 52vh, 0) rotate(180deg) scale(1.05);
+  }
+  75% {
+    transform: translate3d(80px, 78vh, 0) rotate(260deg) scale(0.96);
+  }
+  100% {
+    transform: translate3d(-90px, 115vh, 0) rotate(360deg) scale(0.92);
+    opacity: 0.14;
+  }
+}
+  </style>
+  <link rel="stylesheet" href="../player.css">
+</head>
+<body>
+  <div class="petals" id="petals"></div>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../index.html">Sora Nguyễn</a>
+      <div class="menu">
+        <a href="../index.html">Trang Chủ</a>
+        <a href="nhan-vat.html">Nhân Vật</a>
+        <a class="active" href="thu-vien.html">Thư Viện</a>
+        <a href="cot-truyen.html">Cốt Truyện</a>
+        <a href="am-nhac.html">Âm Nhạc</a>
+        <a href="lien-he.html">Liên Hệ</a>
+      </div>
+    </nav>
+
+    <div class="box">
+      <h1>Thư Viện Ảnh</h1>
+      <p>Trang này hiển thị toàn bộ ảnh trong thư mục <strong>images</strong>. Ảnh nào cũng có tên và mô tả. Bấm vào một ảnh để xem phần giải thích lớn hơn bên dưới.</p>
+      <div class="grid" id="galleryGrid"></div>
+
+      <div class="preview">
+        <div class="panel">
+          <img id="previewImg" src="../images/1 (1).jpg" alt="">
+        </div>
+        <div class="panel">
+          <div class="content">
+            <h2 id="previewTitle">Moon Blossom</h2>
+            <p id="previewDesc"></p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+   const items = [
+  ['1 (1).jpg','Moon Blossom','Nhân vật trung tâm với vẻ đẹp mềm mại và ánh sáng hoa đào.','../music/misty.mp3'],
+  ['1 (2).jpg','Winter Spirit','Nhân vật mang tông lạnh, dịu và rất hợp tuyến chữa lành.','../music/Nhan_Duyen.m4a'],
+  ['1 (3).jpg','Silver Whisper','Gương mặt bí ẩn mang cảm giác trong trẻo và lặng lẽ.','../music/misty.mp3'],
+  ['1 (4).jpg','Silent Blade','Nhân vật nam mạnh mẽ với phong cách trầm và sắc cạnh.','../music/Bat_cong.m4a'],
+  ['1 (5).jpg','Neon Room','Khung cảnh hiện đại, hợp với phần mở đầu kiểu thành phố đêm.','../music/misty.mp3'],
+  ['1 (6).jpg','City Distance','Toàn cảnh thành phố từ xa, mang cảm giác cô đơn và rộng lớn.','../music/Nhan_Duyen.m4a'],
+  ['1 (7).jpg','Sunset Memory','Khung chiều tím hồng cho những hồi ức êm và buồn.','../music/Nhan_Duyen.m4a'],
+  ['1 (8).jpg','City Window','Ô cửa sổ nhìn ra thành phố tím hồng, rất hợp visual novel.','../music/Nhan_Duyen.m4a'],
+  ['1 (9).jpg','Moon Castle','Khung cảnh cổ tích với mặt trăng lớn và không khí thần thoại.','../music/misty.mp3'],
+  ['1 (10).jpg','Blue Ocean Ice','Phong cảnh lạnh, sạch và yên tĩnh như một thế giới khác.','../music/misty.mp3'],
+  ['1 (11).jpg','Burning Sky','Khung trời dữ dội, hợp cho các đoạn cao trào.','../music/Bat_cong.m4a'],
+  ['1 (12).jpg','Neon Gate','Không gian sci-fi với cảm giác cổng dịch chuyển tương lai.','../music/Bat_cong.m4a'],
+  ['1 (13).jpg','Star Hall','Phong cảnh dày ánh sáng, thích hợp làm background sự kiện.','../music/misty.mp3'],
+  ['1 (14).jpg','Crystal Heart','Nhân vật mang vẻ thuần khiết và mong manh.','../music/Nhan_Duyen.m4a'],
+  ['1 (15).jpg','Frost Battle','Cảnh chiến đấu lạnh, đầy năng lượng và tốc độ.','../music/Bat_cong.m4a'],
+  ['1 (16).jpg','Flame Hero','Nhân vật bùng nổ, đại diện cho hành động và cao trào.','../music/Bat_cong.m4a'],
+  ['1 (17).jpg','Sky Bridge','Khung cảnh mở rộng, hợp cho cảm giác bước qua thế giới khác.','../music/misty.mp3'],
+  ['1 (18).jpg','Frost Memory','Hình ảnh nội tâm, lạnh và giàu chất hồi tưởng.','../music/Nhan_Duyen.m4a'],
+  ['1 (19).jpg','Light Walker','Nhân vật mang cảm giác thánh khiết và xa xăm.','../music/misty.mp3'],
+  ['1 (20).jpg','Wind Tale','Khung hình thơ và buồn nhẹ, rất hợp nhật ký nhân vật.','../music/Nhan_Duyen.m4a'],
+  ['1 (21).jpg','Dream Sleep','Nhân vật bí ẩn xuất hiện trong giấc mơ.','../music/misty.mp3'],
+  ['1 (22).jpg','Night Sakura','Ảnh nền chuẩn vibe sakura đêm, thơ và lung linh.','../music/misty.mp3'],
+  ['1 (23).jpg','Purple Blade','Nhân vật nữ hành động với thần thái rất mạnh.','../music/Bat_cong.m4a'],
+  ['1 (24).jpg','Red Veil','Nhân vật đối đầu với sắc đỏ mạnh và nổi bật.','../music/Bat_cong.m4a'],
+  ['1 (25).jpg','Storm Ring','Phong cảnh tròn xoáy, hợp cho phần phép thuật.','../music/Bat_cong.m4a'],
+  ['1 (26).jpg','Star Listener','Nhân vật đứng dưới bầu trời sao, nhiều suy tư.','../music/misty.mp3'],
+  ['1 (27).jpg','Moon Step','Khung ảnh lãng mạn, hợp cho chương giữa truyện.','../music/Nhan_Duyen.m4a'],
+  ['1 (28).jpg','Idol Beat','Nhân vật trẻ trung, hiện đại và giàu năng lượng.','../music/Bat_cong.m4a'],
+  ['1 (29).jpg','Fire Arc','Đường cong lửa trên trời, thích hợp làm chapter card.','../music/Bat_cong.m4a'],
+  ['1 (30).jpg','Orange Horizon','Phong cảnh hoàng hôn với sắc cam đậm, giàu cảm xúc.','../music/Nhan_Duyen.m4a'],
+  ['1 (31).jpg','Cloud Sea','Biển mây rộng lớn, tạo cảm giác yên và sâu.','../music/misty.mp3'],
+  ['1 (32).jpg','Sunset Journey','Hành trình dưới hoàng hôn, gợi cảm giác chia xa và trưởng thành.','../music/Nhan_Duyen.m4a'],
+  ['1 (33).jpg','Sky Burst','Bầu trời bùng sáng, hợp với chương cao trào hoặc kết thúc.','../music/Bat_cong.m4a'],
+  ['1 (34).jpg','Sketch Angel','Nhân vật như bước ra từ bản concept art đầu tiên.','../music/misty.mp3'],
+  ['1 (35).jpg','Black Echo','Nhân vật bóng tối với năng lượng cực nặng.','../music/Bat_cong.m4a'],
+  ['1 (36).jpg','Last Shadow','Nhân vật kết thúc, đại diện cho sự thật cuối cùng.','../music/Nhan_Duyen.m4a']
+];
+
+    const grid = document.getElementById('galleryGrid');
+
+    function setPreview(file, title, desc, music) {
+  document.getElementById('previewImg').src = `../images/${file}`;
+  document.getElementById('previewTitle').innerText = title;
+  document.getElementById('previewDesc').innerText = desc;
+
+  const player = document.getElementById('audioPlayer');
+  if (player) {
+    player.src = music;
+    player.play().catch(() => {});
+  }
+}
+
+    items.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'item' + (idx === 0 ? ' active' : '');
+      div.innerHTML = `
+        <img src="../images/${item[0]}" alt="${item[1]}">
+        <div>
+          <h3>${item[1]}</h3>
+          <p>${item[2]}</p>
+        </div>
+      `;
+      div.onclick = () => {
+  document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
+  div.classList.add('active');
+  setPreview(item[0], item[1], item[2], item[3]);
+};
+      grid.appendChild(div);
+    });
+
+    setPreview(items[0][0], items[0][1], items[0][2], items[0][3]);
+  </script>
+  <script>
+  function createPetals() {
+    const container = document.getElementById('petals');
+    if (!container) return;
+
+    for (let i = 0; i < 56; i++) {
+      const petal = document.createElement('span');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (14 + Math.random() * 12) + 's';
+      petal.style.animationDelay = (Math.random() * 12) + 's';
+      petal.style.opacity = 0.45 + Math.random() * 0.45;
+      petal.style.width = (14 + Math.random() * 14) + 'px';
+      petal.style.height = (9 + Math.random() * 8) + 'px';
+      petal.style.filter = `blur(${Math.random() * 0.8}px)`;
+      container.appendChild(petal);
+    }
+  }
+
+  createPetals();
+</script>
+
+  <div class="sora-player" id="soraPlayer">
+    <div class="sora-player-main">
+      <div class="sora-track">
+        <img class="sora-cover" id="soraCover" src="../images/1 (16).jpg" alt="cover">
+        <div><div class="sora-title" id="soraTitle">Bất Công</div><div class="sora-artist" id="soraArtist">Sora Nguyễn</div></div>
+      </div>
+      <div class="sora-mid">
+        <div class="sora-controls">
+          <button class="sora-btn" id="soraPrev" type="button">⏮</button>
+          <button class="sora-btn" id="soraPlayPause" type="button">▶</button>
+          <button class="sora-btn" id="soraNext" type="button">⏭</button>
+        </div>
+        <div class="sora-progress-line"><span id="soraCurrent">00:00</span><input id="soraProgress" type="range" min="0" max="100" value="0"><span id="soraDuration">00:00</span></div>
+        <div class="sora-status" id="soraStatus">Bấm ▶ để phát nhạc</div>
+      </div>
+      <div class="sora-side">
+        <div class="sora-volume">🔊 <input id="soraVolume" type="range" min="0" max="1" step="0.01" value="0.8"> ♡</div>
+        <div class="sora-tools">
+          <button class="sora-small-btn" id="soraShuffle" type="button">🔀</button>
+          <button class="sora-small-btn" id="soraRepeat" type="button">🔁</button>
+          <button class="sora-small-btn" id="soraToggleList" type="button">Danh sách</button>
+          <button class="sora-small-btn" id="soraCheck" type="button">Kiểm tra</button>
+        </div>
+      </div>
+    </div>
+    <div class="sora-list-panel"><div class="sora-list-title"><span>🎵 Danh sách phát</span><span id="soraListHint">Click bài để phát</span></div><div class="sora-list" id="soraList"></div></div>
+    <audio id="soraAudio" preload="auto"></audio>
+  </div>
+  <script src="../player.js"></script>
+</body>
+</html>

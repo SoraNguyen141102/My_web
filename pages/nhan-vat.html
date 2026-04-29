@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nhân Vật | Sora Nguyễn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --card: rgba(35, 27, 82, 0.72);
+      --line: rgba(255,255,255,0.12);
+      --text: #f9f1ff;
+      --sub: #dbcff8;
+      --gold: #ffe39a;
+    }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(12,10,34,.58), rgba(12,10,34,.90)),
+        url('../images/1 (1).jpg') center/cover fixed no-repeat;
+      min-height: 100vh;
+    }
+    .wrap { width: min(1260px, calc(100% - 28px)); margin: 0 auto; padding-bottom: 30px; }
+    nav {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+      padding: 16px 22px;
+      background: rgba(22,17,54,.52);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+    }
+    .logo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #ffe3f1;
+      text-decoration: none;
+    }
+    .menu { display: flex; gap: 10px; flex-wrap: wrap; }
+    .menu a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .menu a.active { background: linear-gradient(135deg, rgba(244,138,194,.30), rgba(138,120,255,.24)); }
+    .header, .panel {
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+    .header {
+      padding: 28px;
+    }
+    .header h1 { font-size: 3rem; color: #ffd9f1; margin-bottom: 12px; }
+    .header p { color: var(--sub); line-height: 1.8; }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+    .card:hover, .card.active {
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 2px rgba(244,138,194,.4);
+    }
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .card div { padding: 14px; }
+    .card h3 { margin-bottom: 8px; color: #ffe7f4; }
+    .card p { color: var(--sub); line-height: 1.6; font-size: .95rem; }
+    .detail {
+      padding: 20px;
+    }
+    .detail img {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .detail h2 { color: #ffe7f4; margin-bottom: 8px; }
+    .detail p { color: var(--sub); line-height: 1.8; margin-bottom: 10px; }
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 16px;
+    }
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .stat {
+      text-align: center;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    audio { width: 100%; margin-top: 18px; }
+    @media (max-width: 1150px) {
+      .layout { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 780px) {
+      .menu { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .petals {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.petal {
+  position: absolute;
+  top: -15vh;
+  width: 22px;
+  height: 14px;
+  background: linear-gradient(135deg, rgba(255,236,246,0.98), rgba(255,166,208,0.92));
+  border-radius: 16px 2px 16px 2px;
+  box-shadow: 0 0 12px rgba(255, 193, 220, 0.32);
+  opacity: 0.88;
+  animation: sakuraFall linear infinite;
+}
+
+.petal::after {
+  content: '';
+  position: absolute;
+  inset: 2px 3px 3px 3px;
+  background: rgba(255,255,255,0.18);
+  border-radius: inherit;
+}
+
+@keyframes sakuraFall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+  }
+  25% {
+    transform: translate3d(55px, 24vh, 0) rotate(95deg) scale(1);
+  }
+  50% {
+    transform: translate3d(-65px, 52vh, 0) rotate(180deg) scale(1.05);
+  }
+  75% {
+    transform: translate3d(80px, 78vh, 0) rotate(260deg) scale(0.96);
+  }
+  100% {
+    transform: translate3d(-90px, 115vh, 0) rotate(360deg) scale(0.92);
+    opacity: 0.14;
+  }
+}
+  </style>
+  <link rel="stylesheet" href="../player.css">
+</head>
+<body>
+  <div class="petals" id="petals"></div>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../index.html">Sora Nguyễn</a>
+      <div class="menu">
+        <a href="../index.html">Trang Chủ</a>
+        <a class="active" href="nhan-vat.html">Nhân Vật</a>
+        <a href="thu-vien.html">Thư Viện</a>
+        <a href="cot-truyen.html">Cốt Truyện</a>
+        <a href="am-nhac.html">Âm Nhạc</a>
+        <a href="lien-he.html">Liên Hệ</a>
+      </div>
+    </nav>
+
+    <div class="header">
+      <h1>Nhân Vật</h1>
+      <p>Bấm vào từng nhân vật để xem ảnh lớn, vai trò, tính cách, năng lực và phần mô tả riêng. Trang này dùng nhiều ảnh trong thư mục <strong>images</strong> để tạo một danh sách nhân vật rõ ràng hơn.</p>
+    </div>
+
+    <div class="layout">
+      <div class="panel">
+        <div class="grid" id="characterGrid"></div>
+      </div>
+
+      <div class="panel detail">
+        <img id="detailImage" src="../images/1 (1).jpg" alt="">
+        <h2 id="detailTitle">Moon Blossom</h2>
+        <div class="chips" id="detailChips"></div>
+        <p id="detailDesc1"></p>
+        <p id="detailDesc2"></p>
+        <div class="stats">
+          <div class="stat"><strong id="stat1"></strong>Vai trò</div>
+          <div class="stat"><strong id="stat2"></strong>Phong cách</div>
+          <div class="stat"><strong id="stat3"></strong>Độ nổi bật</div>
+          <div class="stat"><strong id="stat4"></strong>Arc</div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const characters = [
+      {
+        img: '../images/1 (1).jpg',
+        name: 'Moon Blossom',
+        short: 'Nữ chính dịu dàng của thế giới sakura.',
+        desc1: 'Moon Blossom là nhân vật mở đầu của câu chuyện. Cô mang vẻ đẹp mềm mại, trầm lặng và là người kết nối toàn bộ những mảnh ký ức của thành phố dưới ánh trăng.',
+        desc2: 'Năng lực chính của cô là đánh thức ký ức ngủ quên qua những cánh hoa đào phát sáng. Cô phù hợp với vai trò trung tâm, người dẫn dắt và gương mặt đại diện của web.',
+        chips: ['Heroine', 'Moonlight', 'Memory'],
+        stats: ['Nữ chính', 'Fantasy', '95%', 'Arc 01']
+      },
+      {
+        img: '../images/1 (2).jpg',
+        name: 'Winter Spirit',
+        short: 'Nhân vật chữa lành với sắc lạnh rất nhẹ.',
+        desc1: 'Winter Spirit sống ở vùng rìa của thế giới ký ức, nơi tuyết không tan và thời gian trôi rất chậm. Cô xuất hiện mỗi khi các nhân vật cần nghỉ ngơi và hồi phục.',
+        desc2: 'Vai trò của cô là cân bằng cảm xúc và giữ cho nhóm không bị lạc trong những ký ức quá nặng nề.',
+        chips: ['Healing', 'Winter', 'Support'],
+        stats: ['Hỗ trợ', 'Soft', '91%', 'Arc 02']
+      },
+      {
+        img: '../images/1 (3).jpg',
+        name: 'Silver Whisper',
+        short: 'Nhân vật mang cảm giác bí ẩn và trong trẻo.',
+        desc1: 'Silver Whisper được xây dựng như một biểu tượng của sự im lặng và quan sát. Mỗi lần xuất hiện đều mang theo một câu hỏi hơn là câu trả lời.',
+        desc2: 'Cô phù hợp cho những đoạn truyện có chiều sâu tâm lý, nơi người xem phải tự suy diễn nhiều hơn.',
+        chips: ['Mystery', 'Quiet', 'Elegance'],
+        stats: ['Phụ', 'Mystic', '88%', 'Arc 03']
+      },
+      {
+        img: '../images/1 (4).jpg',
+        name: 'Silent Blade',
+        short: 'Nam nhân vật mạnh mẽ và khá lạnh lùng.',
+        desc1: 'Silent Blade là nhân vật nam mang tinh thần đối đầu trực diện. Anh đứng giữa ranh giới bảo vệ và phá hủy, luôn xuất hiện vào những chương quan trọng.',
+        desc2: 'Vai trò của anh là làm đối trọng cảm xúc với Moon Blossom và tạo chiều sâu cho các phân đoạn hành động.',
+        chips: ['Male Lead', 'Battle', 'Dark'],
+        stats: ['Đối trọng', 'Action', '90%', 'Arc 04']
+      },
+      {
+        img: '../images/1 (14).jpg',
+        name: 'Crystal Heart',
+        short: 'Nhân vật mang cảm giác thuần khiết và mong manh.',
+        desc1: 'Crystal Heart đại diện cho những điều đẹp nhưng dễ vỡ. Cô gắn với chủ đề tin tưởng, hy vọng và lòng tốt trong những nơi tối nhất.',
+        desc2: 'Thích hợp cho các phân đoạn chữa lành hoặc những chương nhấn mạnh vào cảm xúc mỏng manh.',
+        chips: ['Pure', 'Hope', 'Light'],
+        stats: ['Phụ', 'Emotional', '86%', 'Arc 05']
+      },
+      {
+        img: '../images/1 (16).jpg',
+        name: 'Flame Hero',
+        short: 'Nhân vật bùng nổ, đại diện cho cao trào hành động.',
+        desc1: 'Flame Hero là điểm nhấn cho những đoạn nhịp nhanh, chiến đấu trực diện và chuyển biến lớn.',
+        desc2: 'Nhân vật này thường dẫn dắt các cảnh có lửa, bầu trời đỏ và năng lượng dâng cao.',
+        chips: ['Fire', 'Hero', 'Impact'],
+        stats: ['Chính', 'Action', '99%', 'Arc 06']
+      },
+      {
+        img: '../images/1 (18).jpg',
+        name: 'Frost Memory',
+        short: 'Nhân vật gắn với quá khứ và những hồi tưởng lạnh.',
+        desc1: 'Frost Memory xuất hiện trong các phân đoạn nhân vật đối diện lại chính mình, thường là lúc cốt truyện chậm lại để nhìn sâu vào nội tâm.',
+        desc2: 'Cô là hình tượng của những ký ức không thể quên nhưng cũng không thể chạm vào.',
+        chips: ['Past', 'Memory', 'Ice'],
+        stats: ['Ẩn dụ', 'Drama', '84%', 'Arc 07']
+      },
+      {
+        img: '../images/1 (20).jpg',
+        name: 'Wind Tale',
+        short: 'Nhân vật mang vẻ thơ và buồn rất nhẹ.',
+        desc1: 'Wind Tale phù hợp cho những chương thư tay, nhật ký, đoạn văn kể lại và các cảnh hoàng hôn lặng.',
+        desc2: 'Cô mang lại sự chậm rãi, giúp câu chuyện không chỉ có hành động mà còn có những khoảng thở.',
+        chips: ['Diary', 'Poem', 'Quiet'],
+        stats: ['Phụ', 'Story', '85%', 'Arc 08']
+      },
+      {
+        img: '../images/1 (21).jpg',
+        name: 'Dream Sleep',
+        short: 'Nhân vật bí ẩn chỉ xuất hiện trong giấc mơ.',
+        desc1: 'Dream Sleep là người đưa ra những lời nhắn khó hiểu nhưng luôn đúng lúc. Cô xuất hiện khi nhân vật chính bị mắc kẹt trong ký ức.',
+        desc2: 'Vai trò của cô là gợi ý hướng đi, mở cánh cửa tới sự thật và giữ nhịp chữa lành.',
+        chips: ['Dream', 'Guide', 'Healing'],
+        stats: ['Bí ẩn', 'Dreamy', '93%', 'Arc 09']
+      },
+      {
+        img: '../images/1 (23).jpg',
+        name: 'Purple Blade',
+        short: 'Chiến binh sắc tím mạnh mẽ và nổi bật.',
+        desc1: 'Purple Blade là nhân vật hành động nổi bật nhất trong thế giới này. Cô bảo vệ cánh cổng giữa thế giới thật và vùng ký ức.',
+        desc2: 'Khí chất của cô lạnh, nhanh và chuẩn xác. Cô hợp cho các cảnh chiến đấu, bảo vệ hoặc hi sinh.',
+        chips: ['Action', 'Blade', 'Guardian'],
+        stats: ['Canh gác', 'Combat', '98%', 'Arc 10']
+      },
+      {
+        img: '../images/1 (24).jpg',
+        name: 'Red Veil',
+        short: 'Nhân vật đối đầu với màu đỏ mạnh và sắc nét.',
+        desc1: 'Red Veil đại diện cho nguy hiểm, hấp dẫn và sự bất ổn trong câu chuyện. Cô thường xuất hiện khi mọi thứ tưởng như đã yên ổn.',
+        desc2: 'Nhân vật này phù hợp làm phản diện hoặc người giữ một sự thật khó chấp nhận.',
+        chips: ['Red', 'Danger', 'Conflict'],
+        stats: ['Phản diện', 'Dark', '89%', 'Arc 11']
+      },
+      {
+        img: '../images/1 (26).jpg',
+        name: 'Star Listener',
+        short: 'Nhân vật đứng giữa bầu trời sao và những lời chưa nói.',
+        desc1: 'Star Listener là nhân vật dành cho những đoạn thế giới mở rộng, những câu hỏi lớn và cảm giác nhỏ bé trước vũ trụ.',
+        desc2: 'Cô thích hợp cho các phần world building hoặc các chương đầy suy tư.',
+        chips: ['Stars', 'Wide World', 'Thought'],
+        stats: ['Quan sát', 'Fantasy', '87%', 'Arc 12']
+      },
+      {
+        img: '../images/1 (28).jpg',
+        name: 'Idol Beat',
+        short: 'Nhân vật hiện đại, trẻ trung và giàu năng lượng.',
+        desc1: 'Idol Beat là màu sắc tươi mới giữa thế giới mơ màng này. Nhân vật tạo ra cảm giác trẻ, nhanh và nổi bật.',
+        desc2: 'Phù hợp cho các trang về âm nhạc, thần tượng, sân khấu hoặc chương ngoại truyện nhẹ.',
+        chips: ['Music', 'Idol', 'Modern'],
+        stats: ['Ngoại truyện', 'Pop', '82%', 'Arc 13']
+      },
+      {
+        img: '../images/1 (34).jpg',
+        name: 'Sketch Angel',
+        short: 'Nhân vật như bước ra từ concept art đầu tiên.',
+        desc1: 'Sketch Angel mang vẻ đẹp chưa hoàn thiện, như một ý tưởng còn đang dần thành hình. Cô phù hợp cho khu concept, hậu trường hoặc ý tưởng nền.',
+        desc2: 'Nhân vật này tượng trưng cho những điều chưa nói hết, những bản nháp và khả năng sáng tạo.',
+        chips: ['Concept', 'Angel', 'Art'],
+        stats: ['Ý tưởng', 'Sketch', '80%', 'Arc 14']
+      },
+      {
+        img: '../images/1 (35).jpg',
+        name: 'Black Echo',
+        short: 'Nhân vật bóng tối với năng lượng cực nặng.',
+        desc1: 'Black Echo là mặt đối lập của sự chữa lành. Mỗi lần xuất hiện đều đẩy câu chuyện vào vùng căng thẳng hơn.',
+        desc2: 'Nhân vật này hợp cho các cảnh đối đầu, bí mật và rạn nứt trong nhóm.',
+        chips: ['Dark', 'Echo', 'Pressure'],
+        stats: ['Đối đầu', 'Dark', '92%', 'Arc 15']
+      },
+      {
+        img: '../images/1 (36).jpg',
+        name: 'Last Shadow',
+        short: 'Nhân vật kết thúc, đại diện cho sự thật cuối cùng.',
+        desc1: 'Last Shadow là hình tượng khép lại hành trình. Cô hoặc anh xuất hiện ở cuối truyện để hé lộ điều bị chôn giấu từ rất lâu.',
+        desc2: 'Đây là nhân vật dành cho những chương cuối, nơi mọi câu hỏi dần được trả lời.',
+        chips: ['Finale', 'Truth', 'Shadow'],
+        stats: ['Kết thúc', 'Final', '94%', 'Arc 16']
+      }
+    ];
+
+    const grid = document.getElementById('characterGrid');
+
+    function applyCharacter(item) {
+      document.getElementById('detailImage').src = item.img;
+      document.getElementById('detailTitle').innerText = item.name;
+      document.getElementById('detailDesc1').innerText = item.desc1;
+      document.getElementById('detailDesc2').innerText = item.desc2;
+      document.getElementById('stat1').innerText = item.stats[0];
+      document.getElementById('stat2').innerText = item.stats[1];
+      document.getElementById('stat3').innerText = item.stats[2];
+      document.getElementById('stat4').innerText = item.stats[3];
+      document.getElementById('detailChips').innerHTML = item.chips.map(c => `<div class="chip">${c}</div>`).join('');
+    }
+
+    characters.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'card' + (idx === 0 ? ' active' : '');
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div>
+          <h3>${item.name}</h3>
+          <p>${item.short}</p>
+        </div>
+      `;
+      div.onclick = () => {
+        document.querySelectorAll('.card').forEach(el => el.classList.remove('active'));
+        div.classList.add('active');
+        applyCharacter(item);
+      };
+      grid.appendChild(div);
+    });
+
+    applyCharacter(characters[0]);
+  </script>
+  <script>
+  function createPetals() {
+    const container = document.getElementById('petals');
+    if (!container) return;
+
+    for (let i = 0; i < 56; i++) {
+      const petal = document.createElement('span');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (14 + Math.random() * 12) + 's';
+      petal.style.animationDelay = (Math.random() * 12) + 's';
+      petal.style.opacity = 0.45 + Math.random() * 0.45;
+      petal.style.width = (14 + Math.random() * 14) + 'px';
+      petal.style.height = (9 + Math.random() * 8) + 'px';
+      petal.style.filter = `blur(${Math.random() * 0.8}px)`;
+      container.appendChild(petal);
+    }
+  }
+
+  createPetals();
+</script>
+
+  <div class="sora-player" id="soraPlayer">
+    <div class="sora-player-main">
+      <div class="sora-track">
+        <img class="sora-cover" id="soraCover" src="../images/1 (16).jpg" alt="cover">
+        <div><div class="sora-title" id="soraTitle">Bất Công</div><div class="sora-artist" id="soraArtist">Sora Nguyễn</div></div>
+      </div>
+      <div class="sora-mid">
+        <div class="sora-controls">
+          <button class="sora-btn" id="soraPrev" type="button">⏮</button>
+          <button class="sora-btn" id="soraPlayPause" type="button">▶</button>
+          <button class="sora-btn" id="soraNext" type="button">⏭</button>
+        </div>
+        <div class="sora-progress-line"><span id="soraCurrent">00:00</span><input id="soraProgress" type="range" min="0" max="100" value="0"><span id="soraDuration">00:00</span></div>
+        <div class="sora-status" id="soraStatus">Bấm ▶ để phát nhạc</div>
+      </div>
+      <div class="sora-side">
+        <div class="sora-volume">🔊 <input id="soraVolume" type="range" min="0" max="1" step="0.01" value="0.8"> ♡</div>
+        <div class="sora-tools">
+          <button class="sora-small-btn" id="soraShuffle" type="button">🔀</button>
+          <button class="sora-small-btn" id="soraRepeat" type="button">🔁</button>
+          <button class="sora-small-btn" id="soraToggleList" type="button">Danh sách</button>
+          <button class="sora-small-btn" id="soraCheck" type="button">Kiểm tra</button>
+        </div>
+      </div>
+    </div>
+    <div class="sora-list-panel"><div class="sora-list-title"><span>🎵 Danh sách phát</span><span id="soraListHint">Click bài để phát</span></div><div class="sora-list" id="soraList"></div></div>
+    <audio id="soraAudio" preload="auto"></audio>
+  </div>
+  <script src="../player.js"></script>
+</body>
+</html>
