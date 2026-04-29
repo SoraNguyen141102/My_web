@@ -1,0 +1,124 @@
+/* ===== Sora Nguyen Pro Music Player ===== */
+body { padding-bottom: 155px !important; }
+.sora-player {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 9998;
+  width: min(1100px, calc(100% - 28px));
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,.20);
+  background: rgba(28,22,68,.82);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 58px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.10);
+  overflow: hidden;
+  color: #fff3fb;
+  font-family: 'Nunito', sans-serif;
+}
+.sora-player::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--player-bg);
+  background-size: cover;
+  background-position: center;
+  opacity: .42;
+  filter: saturate(1.2) contrast(1.08);
+  z-index: 0;
+}
+.sora-player::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(16,12,44,.80), rgba(16,12,44,.58), rgba(16,12,44,.78));
+  z-index: 0;
+}
+.sora-player > * { position: relative; z-index: 1; }
+.sora-player-main {
+  display: grid;
+  grid-template-columns: 250px 1fr 230px;
+  gap: 18px;
+  align-items: center;
+  padding: 14px 18px;
+}
+.sora-track { display:flex; align-items:center; gap:12px; min-width:0; }
+.sora-cover { width:60px; height:60px; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.22); box-shadow:0 8px 22px rgba(0,0,0,.25); }
+.sora-title { color:#ffe1f2; font-weight:900; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:1rem; }
+.sora-artist { color:#decef8; font-size:.8rem; margin-top:3px; }
+.sora-mid { display:grid; gap:8px; }
+.sora-controls { display:flex; justify-content:center; align-items:center; gap:18px; }
+.sora-btn { width:38px; height:38px; border-radius:999px; border:1px solid rgba(255,255,255,.12); color:white; background:rgba(255,255,255,.08); cursor:pointer; font-size:1rem; transition:.25s; }
+.sora-btn:hover { transform:translateY(-2px); background:rgba(255,255,255,.14); }
+#soraPlayPause { width:54px; height:54px; background:linear-gradient(135deg,#ff86c8,#bf8aff); box-shadow:0 0 28px rgba(255,134,200,.35); font-size:1.15rem; }
+.sora-progress-line { display:grid; grid-template-columns:48px 1fr 48px; gap:10px; align-items:center; font-size:.78rem; font-weight:900; color:#f0e6ff; }
+#soraProgress, #soraVolume { width:100%; accent-color:#ff86c8; cursor:pointer; }
+.sora-side { display:grid; gap:10px; align-items:center; }
+.sora-volume { display:flex; align-items:center; gap:9px; }
+.sora-tools { display:flex; gap:8px; justify-content:flex-end; }
+.sora-small-btn { border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.08); color:white; border-radius:999px; padding:8px 10px; cursor:pointer; font-weight:800; }
+.sora-small-btn.active { background:linear-gradient(135deg, rgba(255,134,200,.45), rgba(142,117,255,.34)); }
+.sora-list-panel { display:none; border-top:1px solid rgba(255,255,255,.12); padding:10px 14px 14px; max-height:245px; overflow:auto; }
+.sora-player.open .sora-list-panel { display:block; }
+.sora-list-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; color:#ffe1f2; font-weight:900; }
+.sora-list { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:9px; }
+.sora-song { display:flex; gap:10px; align-items:center; min-width:0; padding:9px; border-radius:16px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.10); cursor:pointer; transition:.2s; }
+.sora-song:hover, .sora-song.active { background:linear-gradient(135deg, rgba(255,134,200,.26), rgba(142,117,255,.20)); box-shadow:0 0 0 1px rgba(255,180,220,.22); }
+.sora-song.error { opacity:.55; outline:1px solid rgba(255,100,120,.35); }
+.sora-song img { width:42px; height:42px; object-fit:cover; border-radius:12px; flex:0 0 auto; }
+.sora-song strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#fff1fb; font-size:.84rem; }
+.sora-song span { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#d7c8f4; font-size:.72rem; }
+.sora-status { font-size:.76rem; color:#e5d8ff; opacity:.9; }
+@media (max-width: 980px) { .sora-player-main { grid-template-columns:1fr; } .sora-side { display:none; } .sora-list { grid-template-columns:1fr; } }
+
+
+/* ===== Music glow theo nhạc ===== */
+.sora-player.music-playing-glow {
+  box-shadow:
+    0 0 28px rgba(255, 132, 205, 0.45),
+    0 0 70px rgba(167, 118, 255, 0.30),
+    0 22px 58px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.18) !important;
+  border-color: rgba(255, 180, 225, .38);
+}
+.sora-player.music-playing-glow::before {
+  opacity: .52;
+  filter: saturate(1.35) contrast(1.12) brightness(1.05);
+}
+body.music-is-playing .petal {
+  box-shadow: 0 0 18px rgba(255, 185, 220, .72);
+  filter: saturate(1.18);
+}
+body.music-is-playing .sparkle {
+  box-shadow:
+    0 0 14px rgba(255, 190, 240, 0.95),
+    0 0 28px rgba(180, 150, 255, 0.55);
+}
+
+/* Card hover game cho các trang dùng chung */
+.feature-card, .gallery-item, .card, .chapter, .item, .mini-card, .side-card {
+  position: relative;
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, filter .28s ease;
+}
+.feature-card:hover, .gallery-item:hover, .card:hover, .chapter:hover, .item:hover, .mini-card:hover, .side-card:hover {
+  transform: translateY(-8px) scale(1.025);
+  border-color: rgba(255, 170, 225, 0.50) !important;
+  box-shadow:
+    0 18px 38px rgba(0,0,0,0.34),
+    0 0 26px rgba(255, 135, 210, 0.24),
+    inset 0 1px 0 rgba(255,255,255,.12) !important;
+  filter: saturate(1.08);
+}
+.feature-card::before, .gallery-item::before, .card::before, .chapter::before, .item::before, .mini-card::before, .side-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.13) 45%, transparent 72%);
+  transform: translateX(-130%);
+  transition: transform .55s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+.feature-card:hover::before, .gallery-item:hover::before, .card:hover::before, .chapter:hover::before, .item:hover::before, .mini-card:hover::before, .side-card:hover::before {
+  transform: translateX(130%);
+}
